@@ -7,7 +7,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class gestionFicheros {
-
+	public static void cargarFichero() {
+		
+		
+	}
+	
+	
 	public static File crearFichero() {
 		String ruta = "";
 		File f = null;
@@ -44,7 +49,4 @@ public class gestionFicheros {
 		}
 		return f;
 	}
-
 }
-
-

@@ -13,7 +13,7 @@ import java.util.Scanner;
 import modelo.Tarea;
 
 public class gestionTareas {
-	
+
 	public static void crearTareas() {
 		BufferedWriter wr = null;
 		FileWriter fw = null;
@@ -23,7 +23,7 @@ public class gestionTareas {
 		File f = gestionFicheros.crearFichero();
 		System.out.println("Tareas a añadir: ");
 		texto = sc.nextLine();
-		
+
 		while (true) {
 			tareas.add(texto);
 			System.out.println("Siguiente tarea, si no hay mas que añadir introducir salir: ");
@@ -32,7 +32,7 @@ public class gestionTareas {
 				break;
 			}
 		}
-		
+
 		try {
 			fw = new FileWriter(f, true);
 			wr = new BufferedWriter(fw);
@@ -48,11 +48,39 @@ public class gestionTareas {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			sc.close();
+		sc.close();
+	}
+
+	public static ArrayList<Tarea> cargarTareas(File f) {
+		FileInputStream input = null;
+		
+		ArrayList<Tarea> listaTareas = new ArrayList<Tarea>();
+		String tareaLeida = "";
+		try {
+			input = new FileInputStream(f);
+			InputStreamReader lectura = new InputStreamReader(input);
+			BufferedReader br = new BufferedReader(lectura);
+
+			tareaLeida = br.readLine();
+
+			System.out.println("Tareas de: " + f.getName());
+			int a = 1;
+			while (tareaLeida != null) {
+				Tarea tarea = new Tarea(tareaLeida);
+				listaTareas.add(tarea);
+				System.out.println(a + tarea.getTitulo());
+				tareaLeida = br.readLine();
+				a++;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listaTareas;
 	}
 
 	public static void guardarTareas() {
-		BufferedWriter wr = null;
+		BufferedWriter bw = null;
 		FileWriter fw = null;
 		Scanner sc = new Scanner(System.in);
 		Tarea tarea = new Tarea("");
@@ -62,11 +90,11 @@ public class gestionTareas {
 
 		try {
 			fw = new FileWriter(f, true);
-			wr = new BufferedWriter(fw);
+			bw = new BufferedWriter(fw);
 
-			wr.write(tarea.getTitulo() + "\n");
+			bw.write(tarea.getTitulo() + "\n");
 
-			wr.close();
+			bw.close();
 			fw.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -99,6 +127,31 @@ public class gestionTareas {
 	}
 
 	public static void borrarTareas() {
-		listarTareas();
+		Scanner sc = new Scanner(System.in);
+		BufferedWriter bw = null;
+		FileWriter fw = null;
+		File f = gestionFicheros.elegirFichero();
+		ArrayList<Tarea> listaTareas = cargarTareas(f);
+
+		System.out.println("Elija que tarea desea borrar: ");
+		int opcion = sc.nextInt();
+		listaTareas.remove(opcion - 1);
+		try {
+			fw = new FileWriter(f);
+			bw = new BufferedWriter(fw);
+
+			for (int cont = 0; cont < listaTareas.size(); cont++) {
+				bw.write(listaTareas.get(cont).getTitulo() + "\n");
+			}
+
+			bw.close();
+
+			fw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		sc.close();
 	}
 }

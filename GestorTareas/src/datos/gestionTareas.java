@@ -72,6 +72,7 @@ public class gestionTareas {
 				tareaLeida = br.readLine();
 				a++;
 			}
+			br.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

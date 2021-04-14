@@ -1,8 +1,9 @@
+package modelo;
 
-public class Tareas {
+public class Tarea {
 	private String Titulo;
 
-	public Tareas(String titulo) {
+	public Tarea(String titulo) {
 		Titulo = titulo;
 	}
 
@@ -12,6 +13,11 @@ public class Tareas {
 
 	public void setTitulo(String titulo) {
 		Titulo = titulo;
+	}
+
+	@Override
+	public String toString() {
+		return "Tarea :" + Titulo;
 	}
 	
 	

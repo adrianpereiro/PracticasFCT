@@ -54,7 +54,6 @@ public class gestionTareas {
 	public static ArrayList<Tarea> cargarTareas(File f) {
 		FileInputStream input = null;
 		
-		
 		ArrayList<Tarea> listaTareas = new ArrayList<Tarea>();
 		String tareaLeida = "";
 		try {

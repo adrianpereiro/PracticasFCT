@@ -11,44 +11,49 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import modelo.Tarea;
+import vista.Menu;
 
 public class gestionTareas {
 
 	public static void crearTareas() {
 		BufferedWriter wr = null;
+		Tarea tarea = new Tarea(null, null);
 		FileWriter fw = null;
 		String texto = "";
-		ArrayList<String> tareas = new ArrayList<>();
+		ArrayList<Tarea> tareas = new ArrayList<>();
 		Scanner sc = new Scanner(System.in);
 		File f = gestionFicheros.crearFichero();
-		System.out.println("Tareas a añadir: ");
-		texto = sc.nextLine();
+		System.out.println("Tareas a añadir\nTitulo: ");
+		tarea.setTitulo(sc.nextLine());
+		System.out.println("Descipcion: ");
+		tarea.setDescripcion(sc.nextLine());
+		
 
 		while (true) {
-			tareas.add(texto);
-			System.out.println("Siguiente tarea, si no hay mas que añadir introducir salir: ");
+			try {
+				fw = new FileWriter(f, true);
+				wr = new BufferedWriter(fw);
+				
+				wr.write("-" + tarea + "\n");
+				
+				wr.close();
+				fw.close();
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("Siguiente tarea, si no hay mas que añadir introducir salir:\n"
+					+ "Titulo: ");
 			texto = sc.nextLine();
 			if (texto.equals("salir")) {
 				break;
 			}
+			tarea.setTitulo(texto);
+			System.out.println("Descripcion: ");
+			tarea.setDescripcion(sc.nextLine());
 		}
-
-		try {
-			fw = new FileWriter(f, true);
-			wr = new BufferedWriter(fw);
-
-			for (int i = 0; i < tareas.size(); i++) {
-				wr.write("-" + tareas.get(i) + "\n");
-			}
-
-			wr.close();
-			fw.close();
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		sc.close();
+		Menu.mostrarMenu();
 	}
 
 	public static ArrayList<Tarea> cargarTareas(File f) {
@@ -66,7 +71,7 @@ public class gestionTareas {
 			System.out.println("Tareas de: " + f.getName());
 			int a = 1;
 			while (tareaLeida != null) {
-				Tarea tarea = new Tarea(tareaLeida);
+				Tarea tarea = new Tarea(tareaLeida, null);
 				listaTareas.add(tarea);
 				System.out.println(a + tarea.getTitulo());
 				tareaLeida = br.readLine();
@@ -84,7 +89,7 @@ public class gestionTareas {
 		BufferedWriter bw = null;
 		FileWriter fw = null;
 		Scanner sc = new Scanner(System.in);
-		Tarea tarea = new Tarea("");
+		Tarea tarea = new Tarea(null,null);
 		File f = gestionFicheros.elegirFichero();
 		System.out.println("Tarea a añadir: ");
 		tarea.setTitulo(sc.nextLine());
@@ -102,11 +107,12 @@ public class gestionTareas {
 			e.printStackTrace();
 		}
 		sc.close();
+		Menu.mostrarMenu();
 	}
 
 	public static void listarTareas() {
 		FileInputStream input = null;
-		Tarea tarea = new Tarea("");
+		Tarea tarea = new Tarea(null,null);
 		File f = gestionFicheros.elegirFichero();
 		try {
 			String tareaLeida = "";
@@ -118,13 +124,14 @@ public class gestionTareas {
 			System.out.println("Tareas de: " + f.getName());
 			while (tareaLeida != null) {
 				tarea.setTitulo(tareaLeida);
-				System.out.println("-" + tarea.getTitulo());
+				System.out.println(tarea.getTitulo());
 				tareaLeida = br.readLine();
 			}
 			input.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		Menu.mostrarMenu();
 	}
 
 	public static void borrarTareas() {
@@ -152,7 +159,6 @@ public class gestionTareas {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		sc.close();
+		Menu.mostrarMenu();
 	}
 }

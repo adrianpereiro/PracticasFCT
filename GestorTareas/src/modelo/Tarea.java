@@ -2,9 +2,11 @@ package modelo;
 
 public class Tarea {
 	private String Titulo;
-
-	public Tarea(String titulo) {
+	private String Descripcion;
+	
+	public Tarea(String titulo, String descripcion) {
 		Titulo = titulo;
+		Descripcion = descripcion;
 	}
 
 	public String getTitulo() {
@@ -15,9 +17,17 @@ public class Tarea {
 		Titulo = titulo;
 	}
 
+	public String getDescripcion() {
+		return Descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		Descripcion = descripcion;
+	}
+
 	@Override
 	public String toString() {
-		return "Tarea :" + Titulo;
+		return  Titulo + " Descripcion: " + Descripcion;
 	}
 	
 	

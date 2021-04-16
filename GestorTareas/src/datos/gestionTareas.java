@@ -53,7 +53,7 @@ public class gestionTareas {
 			System.out.println("Descripcion: ");
 			tarea.setDescripcion(sc.nextLine());
 		}
-		Menu.mostrarMenu();
+	//	Menu.mostrarMenu();
 	}
 
 	public static ArrayList<Tarea> cargarTareas(File f) {
@@ -91,14 +91,17 @@ public class gestionTareas {
 		Scanner sc = new Scanner(System.in);
 		Tarea tarea = new Tarea(null,null);
 		File f = gestionFicheros.elegirFichero();
-		System.out.println("Tarea a añadir: ");
+		System.out.println("Tarea a añadir:"
+				+ "\nTitulo: ");
 		tarea.setTitulo(sc.nextLine());
+		System.out.println("Descripcion: ");
+		tarea.setDescripcion(sc.nextLine());
 
 		try {
 			fw = new FileWriter(f, true);
 			bw = new BufferedWriter(fw);
 
-			bw.write(tarea.getTitulo() + "\n");
+			bw.write("-"+ tarea + "\n");
 
 			bw.close();
 			fw.close();
@@ -107,7 +110,7 @@ public class gestionTareas {
 			e.printStackTrace();
 		}
 		sc.close();
-		Menu.mostrarMenu();
+//		Menu.mostrarMenu();
 	}
 
 	public static void listarTareas() {
@@ -131,7 +134,7 @@ public class gestionTareas {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Menu.mostrarMenu();
+	//	Menu.mostrarMenu();
 	}
 
 	public static void borrarTareas() {
@@ -159,6 +162,6 @@ public class gestionTareas {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Menu.mostrarMenu();
+	//	Menu.mostrarMenu();
 	}
 }
